@@ -274,7 +274,6 @@ class MindPilotOrchestrator:
         self.logger.info("Orchestrator", "【Step 4/6】 代码生成与自动调试...")
         code_desc = _task_desc("CodeAgent", f"为「{query}」实现核心算法")
         context = {
-            "top_papers": lit_result.get("top_papers", [])[:3],
             "exp_design":  exp_design,
             "baselines":   exp_design.get("baselines", []),
             "metrics":     exp_design.get("metrics", []),

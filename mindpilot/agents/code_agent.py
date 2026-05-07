@@ -166,18 +166,6 @@ class CodeAgent:
 
         context_parts = []
 
-        # 1. 文献方法摘要，只取少量，避免 prompt 太长
-        top_papers = context.get("top_papers", [])
-        if top_papers:
-            methods = []
-            for p in top_papers[:2]:
-                summary = p.get("structured_summary", {}) if isinstance(p, dict) else {}
-                method = summary.get("method", "")
-                if method:
-                    methods.append(method[:300])
-            if methods:
-                context_parts.append("参考文献方法摘要：\n" + "\n".join(f"- {m}" for m in methods))
-
         # 2. 实验设计摘要
         exp_design = context.get("exp_design", {})
         if isinstance(exp_design, dict) and exp_design:
@@ -209,7 +197,7 @@ class CodeAgent:
             "1. 任务描述是主要依据，上下文只作为参考，不要输出文献综述或解释文字。\n"
             "2. 添加中文注释。\n"
             "3. 包含完整的错误处理。\n"
-            "4. 代码必须是轻量级可运行示例，不要下载外部模型、数据集或权重文件。\n"
+            "4. 代码需要是不过度简化，也不过于重量级可运行示例。\n"
             "5. 不要依赖本地不存在的数据路径。\n"
             "6. 如果任务涉及 YOLO、Transformer、CLIP 等大型模型，请用合成数据或简化模型模拟核心优化思想。\n"
             "7. 最后必须 print 可供后续分析的关键数值结果，例如 loss、accuracy、latency、model_size、speedup 等。\n"
